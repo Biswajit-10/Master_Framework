@@ -16,7 +16,8 @@ public class CreateOrg2_Test extends BaseAnnotationClass{
 		}
 		@Test(groups={"regression"})
 		public void createOrgTest() throws  Throwable{
-				
+			
+			System.out.println("hello");
 			/*Take data from Excel File*/
 			String org=flib.getExcelData("organizations",1, 2);		
 				
