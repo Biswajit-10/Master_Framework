@@ -1,0 +1,18 @@
+
+<suite name="Suite" parallel="tests">
+
+<test thread-count="2" name="Test-2" parallel="tests"> <!-- here not writing parallel=tests is ok -->
+  <parameter name="BROWSER" value="firefox"></parameter>
+    <classes>
+      <class name="com.crm.comcast.contactstest.CreateContactTest"/>
+    </classes>
+  </test> <!-- Test -->
+
+  <test thread-count="2" name="Test-1" parallel="tests"> <!-- here not writing parallel=tests is ok -->
+  <parameter name="BROWSER" value="chrome"></parameter>
+    <classes>
+      <class name="com.crm.comcast.contactstest.CreateContactTest"/>
+    </classes>
+  </test> <!-- Test -->
+  
+</suite> <!-- Suite -->
