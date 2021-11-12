@@ -18,11 +18,11 @@ import com.crm.comcast.genericutility.FileUtility;
 
 public class MVNCMDTest {
 
-	static{
-		System.setProperty("webdriver.chrome.driver","./Drivers/chromedriver.exe");
-		System.setProperty("webdriver.gecko.driver","./Drivers/geckodriver.exe");
-	}
-	static WebDriver driver;
+//	static{
+//		System.setProperty("webdriver.chrome.driver","./Drivers/chromedriver.exe");
+//		System.setProperty("webdriver.gecko.driver","./Drivers/geckodriver.exe");
+//	}
+//	static WebDriver driver;
 	@Test
 	public void create() throws EncryptedDocumentException, IOException {
 //		FileUtility f=new FileUtility();
@@ -30,7 +30,8 @@ public class MVNCMDTest {
 //		Random random=new Random();
 //		int i=random.nextInt();
 //		String orgname=org+" "+i;
-		
+	
+//	public static void main(String[] mains) {
 		String BROWSER =System.getProperty("Browser");
 		System.out.println(BROWSER);
 		String url =System.getProperty("url");
