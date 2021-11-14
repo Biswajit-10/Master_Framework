@@ -18,8 +18,6 @@ public class CreateOrg2_Test extends BaseAnnotationClass{
 		public void createOrgTest() throws  Throwable{
 			
 			System.out.println("hello");
-			System.out.println("hello");
-			System.out.println("hello");
 			/*Take data from Excel File*/
 			String org=flib.getExcelData("organizations",1, 2);		
 				
