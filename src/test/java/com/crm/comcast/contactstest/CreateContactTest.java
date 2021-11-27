@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.crm.comcast.genericutility.BaseAnnotationClass;
@@ -13,7 +14,7 @@ import com.crm.comcast.pomrepositylib.CreatingNewContact;
 import com.crm.comcast.pomrepositylib.Home;
 import com.crm.comcast.pomrepositylib.Organization;
 import com.crm.comcast.pomrepositylib.OrganizationInfo;
-
+@Listeners(com.crm.comcast.genericutility.ListenerImpl.class)
 public class CreateContactTest extends BaseAnnotationClass{
 	
 	@Test(groups={"smoke"})
