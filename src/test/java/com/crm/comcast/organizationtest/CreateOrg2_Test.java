@@ -10,10 +10,7 @@ import com.crm.comcast.pomrepositylib.Organization;
 import com.crm.comcast.pomrepositylib.OrganizationInfo;
 @Listeners(com.crm.comcast.genericutility.ListenerImpl.class)
 public class CreateOrg2_Test extends BaseAnnotationClass{
-		static {
-			System.setProperty("webdriver.chrome.driver","./Drivers/chromedriver.exe");
-			System.setProperty("webdriver.gecko.driver","./Drivers/geckodriver.exe");
-		}
+		
 		@Test(groups={"regression"})
 		public void createOrgTest() throws  Throwable{
 			

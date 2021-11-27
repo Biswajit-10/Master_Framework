@@ -15,10 +15,7 @@ import com.crm.comcast.pomrepositylib.Organization;
 import com.crm.comcast.pomrepositylib.OrganizationInfo;
 
 public class CreateContactTest extends BaseAnnotationClass{
-	static {
-		System.setProperty("webdriver.chrome.driver","./Drivers/chromedriver.exe");
-		System.setProperty("webdriver.gecko.driver","./Drivers/geckodriver.exe");
-	}
+	
 	@Test(groups={"smoke"})
 	public void createContTest() throws EncryptedDocumentException, IOException, InterruptedException {
 		

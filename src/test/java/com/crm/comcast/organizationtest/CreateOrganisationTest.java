@@ -12,10 +12,6 @@ import com.crm.comcast.pomrepositylib.Organization;
 import com.crm.comcast.pomrepositylib.OrganizationInfo;
 
 public class CreateOrganisationTest extends BaseAnnotationClass{
-	static {
-		System.setProperty("webdriver.chrome.driver","./Drivers/chromedriver.exe");
-		System.setProperty("webdriver.gecko.driver","./Drivers/geckodriver.exe");
-	}
 	
 	@Test(groups={"smoke"})
 	public void createOrgWithIndustriesTest() throws EncryptedDocumentException, IOException, InterruptedException {

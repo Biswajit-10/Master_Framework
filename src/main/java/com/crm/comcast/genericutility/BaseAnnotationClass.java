@@ -12,11 +12,18 @@ import org.testng.annotations.*;
 import com.crm.comcast.pomrepositylib.Home;
 import com.crm.comcast.pomrepositylib.Login;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class BaseAnnotationClass {
 	public FileUtility flib=new FileUtility();
 	public JavaUtility jlib=new JavaUtility();
 	public WebDriverUtility  wlib=new WebDriverUtility();
 	public WebDriver driver;
+	static {
+		WebDriverManager.chromedriver().setup();		
+		WebDriverManager.firefoxdriver().setup();		
+		WebDriverManager.iedriver().setup();		
+	}
 	
 	@Parameters(value="BROWSER")//this name same as xml parameter name
 	@BeforeClass(groups={"smoke","regression"})
