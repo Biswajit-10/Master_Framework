@@ -19,6 +19,7 @@ public class CreateContactTest extends BaseAnnotationClass{
 		System.setProperty("webdriver.chrome.driver","./Drivers/chromedriver.exe");
 		System.setProperty("webdriver.gecko.driver","./Drivers/geckodriver.exe");
 	}
+	
 	@Test(groups={"smoke"})
 	public void createContTest() throws EncryptedDocumentException, IOException, InterruptedException {
 		

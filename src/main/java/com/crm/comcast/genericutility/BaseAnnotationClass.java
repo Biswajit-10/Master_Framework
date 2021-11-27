@@ -20,8 +20,8 @@ public class BaseAnnotationClass {
 	
 	@Parameters(value="BROWSER")//this name same as xml parameter name
 	@BeforeClass(groups={"smoke","regression"})
-	public void configBc( /* String BROWSER */ ) throws IOException {//this name can be anything but same as inside method name
-		String BROWSER =flib.getPropertyData("BROW");
+	public void configBc(  String BROWSER  ) throws IOException {//this name can be anything but same as inside method name
+//		String BROWSER =flib.getPropertyData("BROW");
 		/*Open Browser*/
 		if(BROWSER.equals("chrome"))
 		{        
