@@ -1,0 +1,39 @@
+public void click(MobileElement mobileElement) {
+		waitForVisibility(mobileElement);
+		TestUtils.log().info(mobileElement.getText() + " is clicked");
+		ExtentLogger.info("<b>" + mobileElement.getText() + "</b> is clicked");
+		mobileElement.click();
+	}
+
+	public void click(MobileElement mobileElement, String elementName) {
+		waitForVisibility(mobileElement);
+		TestUtils.log().info(elementName + " is clicked");
+		ExtentLogger.info("<b>" + elementName + "</b> is clicked");
+		mobileElement.click();
+	}
+
+	public void clear(MobileElement mobileElement, String elementName) {
+		waitForVisibility(mobileElement);
+		TestUtils.log().info("Clearing: " + elementName);
+		mobileElement.clear();
+	}
+
+	public void sendKeys(MobileElement mobileElement, String txt) {
+		waitForVisibility(mobileElement);
+		TestUtils.log().info("Filling " + txt + " in " + mobileElement.getText());
+		ExtentLogger.info("Filling <b>" + txt + "</b> in <b>" + mobileElement.getText() + "</b>");
+		// mobileElement.clear();
+		clear(mobileElement, txt);
+		mobileElement.sendKeys(txt);
+
+	}
+
+	public void sendKeys(MobileElement mobileElement, String txt, String elementName) {
+		waitForVisibility(mobileElement);
+		TestUtils.log().info("Filling " + txt + " in " + elementName);
+		ExtentLogger.info("Filling <b>" + txt + "</b> in <b>" + elementName + "</b>");
+		// mobileElement.clear();
+		clear(mobileElement, elementName);
+		mobileElement.sendKeys(txt);
+
+	}
