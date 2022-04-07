@@ -1,0 +1,243 @@
+public class BaseAnnotationClass {
+public getOtpNew OTP = new getOtpNew();
+	public SoftAssert softAssert = new SoftAssert();
+	public static AppiumDriverLocalService service;
+	public static IOSDriver<WebElement>  driver;
+	public UtilityCommon utility = new UtilityCommon();
+	public static String otp;
+
+	public ExtentReports report;
+	public static ExtentTest test;
+	public ExtentHtmlReporter htmlReporter;
+	static String className;
+
+	@BeforeSuite
+	public void beforeSuite() {
+
+	}
+
+	@BeforeClass
+	public void configBc(ITestContext context) throws  Throwable {
+		System.out.println("Runnig Before Class");
+		className = this.getClass().getSimpleName();
+
+		System.out.println(context.getName().getClass().getSimpleName());
+		htmlReporter=new ExtentHtmlReporter("./Extent Report/"+className+"/"+className+".html"); 
+		htmlReporter.config().setDocumentTitle("Yono SBI");
+		htmlReporter.config().setReportName(className+" Automation Execution report");
+
+		report=new ExtentReports();
+		report.attachReporter(htmlReporter);
+		report.setSystemInfo("os",System.getProperty("os.name"));
+
+	}
+	@BeforeMethod
+	public void configBm(ITestResult result) throws Throwable  {
+	
+		test=report.createTest(result.getMethod().getMethodName());
+		System.out.println("starting: "+ result.getMethod().getMethodName());
+		//		login
+		System.out.println("---------------------------Starting a New Method--------------------------------");
+		capabilities();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+	}
+	@AfterMethod
+	public void configAm(ITestResult result) throws IOException {
+		if (result.getStatus() == ITestResult.FAILURE) {
+			test.log(Status.FAIL, result.getMethod().getMethodName(),MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot( driver)).build());
+		}
+
+		else if (result.getStatus() == ITestResult.SKIP){
+			test.log(Status.SKIP,result.getMethod().getMethodName());
+		}
+		
+		else{
+			BaseAnnotationClass.test.log(Status.PASS,"Test Case Passed",MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot(driver)).build());
+		}
+
+
+		softAssert.assertAll();
+		System.out.println("---------------------------Execution of the Method is Finished--------------------------------------");
+	}
+	@AfterClass
+	public void configAc() {
+		report.flush();
+	}
+
+
+	public static String getScreenshot(WebDriver driver) throws IOException{
+		String dateName = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		String destination = System.getProperty("user.dir") + "/Extent Report/"+className+"/Screenshot/" + dateName +".png";
+		File finalDestination = new File(destination);
+		FileUtils.copyFile(source, finalDestination);
+		return destination;
+	}
+
+
+	public static  IOSDriver<WebElement> capabilities() throws IOException, InterruptedException
+	{
+
+
+		DesiredCapabilities cap=new DesiredCapabilities();
+		cap.setCapability("platformName", "iOS");
+		cap.setCapability("platformVersion", "15.3");
+		cap.setCapability("deviceName", "UAT_RTA's iPhone");
+		cap.setCapability("udid", "00008020-000508AC2269002E");
+		cap.setCapability("automationName", "XCUITest");
+		cap.setCapability("bundleId", "com.sbi.lotusintouch.internal");
+		cap.setCapability("clearSystemFiles", true);
+		URL url=new URL("http://0.0.0.0:4724/wd/hub");
+		driver = new IOSDriver<WebElement>(url,cap);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+		return driver;
+	}
+
+	public static void getScreenshot(String s) throws IOException
+	{
+		File scrfile=	((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(scrfile,new File(System.getProperty("user.dir")+"\\"+s+".png"));
+
+	}
+
+	public void LogoutTest(WebDriver driver){
+		SBIYonoLogoutPage SBIYonoLogoutPage = new SBIYonoLogoutPage(driver);	
+		SBIYonoLogoutPage.clickLogout();
+		SBIYonoLogoutPage.clickOnYesButton();
+	}
+
+	public void LogoutTest2(WebDriver driver){
+		SBIYonoLogoutPage SBIYonoLogoutPage = new SBIYonoLogoutPage(driver);	
+		SBIYonoLogoutPage.clickLogout2();
+		SBIYonoLogoutPage.clickOnYesButton();
+	}
+
+	public void LogoutTest3(WebDriver driver){
+		SBIYonoLogoutPage SBIYonoLogoutPage = new SBIYonoLogoutPage(driver);	
+		SBIYonoLogoutPage.clickLogout3();
+		SBIYonoLogoutPage.clickOnYesButton();
+	}
+
+	public void LogoutTest4(WebDriver driver){
+		SBIYonoLogoutPage SBIYonoLogoutPage = new SBIYonoLogoutPage(driver);	
+		SBIYonoLogoutPage.clickLogout4();
+		SBIYonoLogoutPage.clickOnYesButton();
+	}
+
+	public void LoginTest(WebDriver driver) {
+		SBIYonoLoginPage sbiYonoLoginPage = new SBIYonoLoginPage(driver);
+		sbiYonoLoginPage.clickOnLoginBtn();
+		sbiYonoLoginPage.clickOnUserID();
+		sbiYonoLoginPage.enterCredential("lotustest696", "Lotustest@696");
+		try {
+			test.log(Status.INFO,"LogIn Page",MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot( driver)).build());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		sbiYonoLoginPage.clickOnLogin();
+	}
+	public void LoginTest(WebDriver driver,ExtentTest test) {
+		SBIYonoLoginPage sbiYonoLoginPage = new SBIYonoLoginPage(driver,test);
+		sbiYonoLoginPage.clickOnLoginBtn();
+		sbiYonoLoginPage.clickOnUserID();
+		sbiYonoLoginPage.enterCredential("lotustest696", "Lotustest@696");
+		sbiYonoLoginPage.clickOnLogin();
+	}
+  }
+  
+  
+  public class SBIYonoLogoutPage {
+	
+	WebDriverUtility wLib=new WebDriverUtility();
+	
+	@FindAll({
+	@FindBy(xpath = "(//*[@name='']/../XCUIElementTypeOther)[last()]")	,
+	@FindBy(xpath = "(//*[@name='']/following-sibling::XCUIElementTypeOther)[last()]")	,
+	@FindBy(xpath = "//XCUIElementTypeOther[@name]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]/XCUIElementTypeImage")	
+	})
+	private WebElement btnLogout;
+	
+	@FindBy(xpath = "//XCUIElementTypeOther[@name]/XCUIElementTypeOther[1]/XCUIElementTypeOther[4]/XCUIElementTypeImage")	
+	private WebElement btnLogout2;
+	
+	@FindBy(xpath = "//XCUIElementTypeOther[@name]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther[4]/XCUIElementTypeImage")	
+	private WebElement btnLogout3;
+	
+	@FindBy(xpath = "(//*[@name='']/following-sibling::XCUIElementTypeOther)[last()]")	
+	private WebElement btnLogout4;
+	
+	@FindBy(xpath = "//XCUIElementTypeOther[@name]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]/XCUIElementTypeImage")	
+	private WebElement btnLogoutHomePage;	//(home page,m)
+	//(Notbworking --> yono cash, )
+	@iOSXCUITFindBy(accessibility  = "YES")
+	private WebElement btnYES;
+	
+	WebDriver driver;
+
+	public SBIYonoLogoutPage(WebDriver driver) {
+		
+		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+		this.driver=driver;
+	}
+	
+	public void clickOnLogout(){
+		wLib.jsClick(driver, btnLogout);
+		System.out.println("Logout button is clicked");
+//		btnYES.click();
+	}
+	
+	public void clickLogout(){
+		btnLogout.click();
+		System.out.println("Logout button is clicked");
+	}
+	
+	public void clickLogout2(){
+		btnLogout2.click();
+		System.out.println("Logout button is clicked");
+	}
+	
+	public void clickLogout3(){
+		btnLogout3.click();
+		System.out.println("Logout button is clicked");
+	}
+	
+	public void clickLogout4(){
+		btnLogout4.click();
+		System.out.println("Logout button is clicked");
+	}
+	
+	
+	public void clickOnYesButton(){
+		btnYES.click();
+		takeScreenShot("yes button");
+		System.out.println("Yes button is clicked");
+	}
+	public WebElement getBtnLogout() {
+//		new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf((WebElement) btnLogout)); //casting can not be done
+		return btnLogout;
+	}
+	public void takeScreenShot(String message){
+		try {
+	   		BaseAnnotationClass.test.log(Status.INFO,message,MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot()).build());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public String getScreenshot() throws IOException{
+		String dateName = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		String destination = System.getProperty("user.dir") + "/Extent Report/Screenshot/" + dateName +".png";
+		File finalDestination = new File(destination);
+		FileUtils.copyFile(source, finalDestination);
+		return destination;
+	}
+	
+}
+
+
+
+
