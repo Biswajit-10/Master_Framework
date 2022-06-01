@@ -37,3 +37,156 @@ public void click(MobileElement mobileElement) {
 		mobileElement.sendKeys(txt);
 
 	}
+	
+	
+
+	public WebDriverUtility wLib = new WebDriverUtility();
+
+	/**
+	 * @param element
+	 * @param elementName
+	 */
+	public void clickScreenshot(WebElement element, String elementName) {
+		try {
+			wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+			element.click();
+			ReportLoggerScreenshot(info, elementName + " is clicked");
+			LogManager.getLogger().info(elementName + " is clicked");
+		} catch (Exception e) {
+			ReportLoggerScreenshot(info, elementName + " unable to click");
+			LogManager.getLogger().info(elementName + " unable to click");
+		}
+	}
+
+	/**
+	 * click on element and take screenshot with message written in attribute "
+	 * 'label'+ is clicked " and Print message in testng report and in console
+	 * <b>Strore logs</b>
+	 * 
+	 * @param element
+	 */
+	public void clickScreenshot(WebElement element) {
+//		System.out.println("Trying clicking element "+element.);
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		String elementName = element.getAttribute("label");
+		if(elementName==null) {
+			elementName=element.getAttribute("value");
+		}
+		try {
+			element.click();
+			ReportLoggerScreenshot(info, elementName + " is clicked");
+			LogManager.getLogger().info(elementName + " is clicked");
+		} catch (Exception e) {
+			ReportLoggerScreenshot(info, elementName + " unable to click");
+			LogManager.getLogger().info(elementName + " unable to click");
+		}
+
+	}
+
+	/**
+	 * No Screenshot Click log the event on console and log on file and extent
+	 * Report
+	 */
+	public void click(WebElement element) {
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		String elementName = element.getAttribute("label");
+		if(elementName==null) {
+			elementName=element.getAttribute("value");
+		}
+		try {
+			element.click();
+			BaseTest.test.info(elementName + " is clicked");
+			LogManager.getLogger().info(elementName + " is clicked");
+		} catch (Exception e) {
+			BaseTest.test.info(elementName + " unable to click");
+			LogManager.getLogger().info(elementName + " unable to click");
+		}
+
+	}
+
+	/**
+	 * No Screenshot Click log the event on console and log on file and extent
+	 * Report
+	 */
+	public void click(WebElement element, String elementName) {
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		element.click();
+		BaseTest.test.info(elementName + " is clicked");
+		LogManager.getLogger().info(elementName + " is clicked");
+	}
+
+	public void sendKeys(WebElement element, String txt) {
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		String name = element.getAttribute("value");
+		if(name==null) {
+			name=element.getAttribute("label");
+		}
+		try {
+			element.sendKeys(txt);
+			BaseTest.test.info("text " + txt + " in " + name + " text box is sent");
+			LogManager.getLogger().info("text " + txt + " in " + name + " text box is sent");
+		} catch (Exception e) {
+			BaseTest.test.info("send Keys " + txt + " in " + name + " is failed");
+			LogManager.getLogger().info("send Keys " + txt + " in " + name + " is failed");
+		}
+	}
+
+	public void sendKeys(WebElement element, String txt, String name) {
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		try {
+			element.sendKeys(txt);
+			BaseTest.test.info(txt + " is sent to " + name + " text field ");
+			LogManager.getLogger().info(txt + " is sent to " + name + " text field ");
+		} catch (Exception e) {
+			BaseTest.test.info("send Keys " + txt + " in " + name + " is failed");
+			LogManager.getLogger().info("send Keys " + txt + " in " + name + " is failed");
+		}
+	}
+
+	/**
+	 * pending
+	 */
+	public void sendKeysSlowly(WebElement element, String txt) {
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		String name = element.getAttribute("value");
+		element.sendKeys(txt.substring(0, 1));
+		for (int i = 1; i < txt.length(); i++) {
+			BaseTest.driver.findElementByXPath(
+					"//XCUIElementTypeOther[@name=\"Re-enter Account Number *\"]/preceding-sibling:: XCUIElementTypeTextField")
+					.sendKeys(txt.substring(i, i + 1));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+			}
+		}
+
+		BaseTest.test.info("Filling " + txt + " in " + name);
+		Reporter.log("Filling " + txt + " in " + name, true);
+	}
+
+	public void clear(WebElement element) {
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		BaseTest.test.info("Clearing: " + element.getAttribute("value") + " text box");
+		Reporter.log("Clearing: " + element.getAttribute("value") + " text box", true);
+		element.clear();
+	}
+
+	public void clear(WebElement element, String name) {
+		wLib.waitForElemnetToBeVisible(BaseTest.driver, element);
+		BaseTest.test.info("Clearing: " + name + " text box");
+		Reporter.log("Clearing: " + name + " text box", true);
+		element.clear();
+	}
+
+	public boolean isDisplayed(WebElement element) {
+		try {
+			new WebDriverWait(BaseTest.driver, 15).until(ExpectedConditions.visibilityOf(element));
+			return element.isDisplayed();
+		} catch (NoSuchElementException | TimeoutException exception) {
+			BaseTest.test.fail("Element is not present");
+			return false;
+		}
+
+	}
+
+
